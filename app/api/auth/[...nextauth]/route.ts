@@ -1,11 +1,9 @@
 import NextAuth from "next-auth";
 import { authOptions } from "@/lib/auth";
 
-/**
- * VERY IMPORTANT
- * NextAuth + Prisma + bcrypt require Node.js runtime
- */
+// FORCE NODE + DYNAMIC (VERY IMPORTANT)
 export const runtime = "nodejs";
+export const dynamic = "force-dynamic";
 
 const handler = NextAuth(authOptions);
 

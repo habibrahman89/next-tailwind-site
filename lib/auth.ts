@@ -10,6 +10,7 @@ export const authOptions: NextAuthOptions = {
         password: { label: "Password", type: "password" },
       },
       async authorize(credentials) {
+        // TEMPORARY AUTH (NO DATABASE)
         if (
           credentials?.email === "admin@example.com" &&
           credentials.password === "admin"
@@ -23,8 +24,10 @@ export const authOptions: NextAuthOptions = {
       },
     }),
   ],
+
   session: {
     strategy: "jwt",
   },
+
   secret: process.env.NEXTAUTH_SECRET,
 };
