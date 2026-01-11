@@ -24,3 +24,10 @@
     "typescript": "5.9.3"
   }
 }
+
+{
+  "scripts": {
+    "postinstall": "prisma generate",
+    "vercel-build": "prisma migrate deploy && next build"
+  }
+}
