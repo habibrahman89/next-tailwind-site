@@ -28,3 +28,7 @@
     "typescript": "^5.4.5"
   }
 }
+"scripts": {
+  "db:migrate": "prisma migrate deploy",
+  "vercel-build": "next build"
+}
