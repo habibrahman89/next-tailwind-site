@@ -2,10 +2,13 @@
   "name": "next-tailwind-site",
   "private": true,
   "scripts": {
-    "dev": "next dev",
-    "build": "next build",
-    "start": "next start"
-  },
+  "dev": "next dev",
+  "build": "next build",
+  "start": "next start",
+  "lint": "next lint",
+  "postinstall": "prisma generate",
+  "vercel-build": "prisma migrate deploy && next build"
+},
   "dependencies": {
     "@prisma/client": "^5.22.0",
     "bcrypt": "^6.0.0",
@@ -29,5 +32,20 @@
   "scripts": {
     "postinstall": "prisma generate",
     "vercel-build": "prisma migrate deploy && next build"
+  }
+}
+
+{
+  "name": "next-tailwind-site",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    ...
+  },
+  "dependencies": {
+    ...
+  },
+  "devDependencies": {
+    ...
   }
 }
