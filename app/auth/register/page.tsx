@@ -5,19 +5,19 @@ import { useRouter } from "next/navigation";
 
 export default function RegisterPage() {
   const router = useRouter();
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [error, setError] = useState("");
 
-  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+  async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
-    const form = new FormData(e.currentTarget);
+    setError("");
 
     const res = await fetch("/api/auth/register", {
       method: "POST",
-      body: JSON.stringify({
-        name: form.get("name"),
-        email: form.get("email"),
-        password: form.get("password"),
-      }),
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ name, email, password }),
     });
 
     if (res.ok) {
@@ -28,13 +28,42 @@ export default function RegisterPage() {
   }
 
   return (
-    <form onSubmit={handleSubmit} className="max-w-sm mx-auto mt-20 space-y-4">
-      <h1 className="text-xl font-bold">Register</h1>
-      <input name="name" placeholder="Name" className="input" />
-      <input name="email" placeholder="Email" className="input" />
-      <input name="password" type="password" placeholder="Password" className="input" />
-      {error && <p className="text-red-500">{error}</p>}
-      <button className="btn w-full">Create Account</button>
-    </form>
+    <div className="flex min-h-screen items-center justify-center">
+      <form onSubmit={handleSubmit} className="space-y-4">
+        <h1 className="text-xl font-bold">Register</h1>
+
+        {error && <p className="text-red-500">{error}</p>}
+
+        <input
+          placeholder="Name"
+          className="border p-2 w-64"
+          value={name}
+          onChange={(e) => setName(e.target.value)}
+          required
+        />
+
+        <input
+          type="email"
+          placeholder="Email"
+          className="border p-2 w-64"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          required
+        />
+
+        <input
+          type="password"
+          placeholder="Password"
+          className="border p-2 w-64"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          required
+        />
+
+        <button className="bg-black text-white px-4 py-2 w-full">
+          Create Account
+        </button>
+      </form>
+    </div>
   );
 }

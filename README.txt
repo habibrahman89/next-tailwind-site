@@ -171,3 +171,7 @@ git push
 
 npx prisma migrate dev --name <change>
 git push
+
+git add .
+git commit -m "Fix NextAuth credentials login and session handling"
+git push origin main

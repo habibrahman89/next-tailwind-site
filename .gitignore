@@ -9,6 +9,7 @@ out/
 .env
 .env.*
 .env.local
+.env.production
 
 # prisma
 prisma/dev.db
