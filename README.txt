@@ -167,3 +167,7 @@ git push
 git add .
 git commit -m "Configure Prisma for Vercel Postgres (server-side migrations)"
 git push
+
+
+npx prisma migrate dev --name <change>
+git push
