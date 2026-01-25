@@ -1,15 +1,28 @@
 "use client";
-import ThemeToggle from "./ThemeToggle";
+
+import { useSession, signOut } from "next-auth/react";
+
+export const dynamic = "force-dynamic";
 
 export default function Navbar() {
+  const session = useSession();
+
+  if (!session) return null;
+
+  const { data, status } = session;
+
+  if (status === "loading") return null;
+
   return (
-    <header className="flex justify-between items-center p-6 bg-slate-900 text-white sticky top-0">
-      <h1 className="font-bold text-xl">Widenex</h1>
-      <nav className="space-x-6">
-        <a href="#features">Features</a>
-        <a href="#contact">Contact</a>
-        <ThemeToggle />
-      </nav>
-    </header>
+    <nav>
+      {data?.user ? (
+        <>
+          <span>{data.user.email}</span>
+          <button onClick={() => signOut()}>Logout</button>
+        </>
+      ) : (
+        <span>Not logged in</span>
+      )}
+    </nav>
   );
 }

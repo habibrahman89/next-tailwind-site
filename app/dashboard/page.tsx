@@ -1,13 +1,21 @@
-import { getServerSession } from "next-auth";
-import { authOptions } from "@/lib/auth";
+"use client";
 
-export default async function Dashboard() {
-  const session = await getServerSession(authOptions);
+import { useSession } from "next-auth/react";
 
-  return (
-    <div className="p-10">
-      <h1 className="text-3xl font-bold">Dashboard</h1>
-      <p>Welcome {session?.user?.email}</p>
-    </div>
-  );
+export const dynamic = "force-dynamic";
+
+export default function DashboardPage() {
+  const session = useSession();
+
+  if (!session) return null;
+
+  const { data, status } = session;
+
+  if (status === "loading") return <p>Loading...</p>;
+
+  if (!data?.user) {
+    return <p>Unauthorized</p>;
+  }
+
+  return <div>Welcome {data.user.email}</div>;
 }
