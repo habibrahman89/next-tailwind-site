@@ -1,13 +1,22 @@
+export const dynamic = "force-dynamic";
+
 "use client";
 
-import { signIn, useSession } from "next-auth/react";
+import { useSession, signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 
 export default function LoginPage() {
-  const { data: session, status } = useSession();
+  const session = useSession();
+
+  // ✅ SAFETY GUARD (THIS IS WHAT YOU ASKED ABOUT)
+  if (!session) return null;
+
+  const { data, status } = session;
+
   const router = useRouter();
 
+  // redirect logged-in users
   useEffect(() => {
     if (status === "authenticated") {
       router.replace("/dashboard");
@@ -22,12 +31,7 @@ export default function LoginPage() {
     <div>
       <h1>Login</h1>
 
-      {/* credentials form here */}
-
-      <button
-        onClick={() => signIn("google")}
-        className="border px-4 py-2 rounded"
-      >
+      <button onClick={() => signIn("google", { callbackUrl: "/dashboard" })}>
         Continue with Google
       </button>
     </div>
