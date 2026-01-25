@@ -175,3 +175,10 @@ git push
 git add .
 git commit -m "Fix NextAuth credentials login and session handling"
 git push origin main
+
+
+http://localhost:3000/api/auth/callback/google
+https://next-tailwind-site-kohl.vercel.app/api/auth/callback/google
+
+node -e "console.log(require('crypto').randomBytes(32).toString('hex'))"
+node -e "console.log(require('crypto').randomBytes(32).toString('base64'))"
