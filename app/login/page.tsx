@@ -1,15 +1,43 @@
 "use client";
+
 import { signIn } from "next-auth/react";
+import { useState } from "react";
 
 export default function LoginPage() {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  async function handleSubmit(e: React.FormEvent) {
+    e.preventDefault();
+
+    await signIn("credentials", {
+      email,
+      password,
+      callbackUrl: "/dashboard",
+    });
+  }
+
   return (
-    <div className="h-screen flex items-center justify-center">
-      <button
-        onClick={() => signIn()}
-        className="bg-blue-600 text-white px-6 py-3 rounded"
-      >
-        Sign In
-      </button>
-    </div>
+    <form onSubmit={handleSubmit}>
+      <h1>Login</h1>
+
+      <input
+        type="email"
+        placeholder="Email"
+        value={email}
+        onChange={(e) => setEmail(e.target.value)}
+        required
+      />
+
+      <input
+        type="password"
+        placeholder="Password"
+        value={password}
+        onChange={(e) => setPassword(e.target.value)}
+        required
+      />
+
+      <button type="submit">Login</button>
+    </form>
   );
 }
