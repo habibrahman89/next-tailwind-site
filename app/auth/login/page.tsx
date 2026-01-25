@@ -1,14 +1,19 @@
 "use client";
 
+import { useSession } from "next-auth/react";
 import { useEffect } from "react";
-import { signIn, useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 
 export const dynamic = "force-dynamic";
 
 export default function LoginPage() {
-  const { data, status } = useSession();
+  const session = useSession();
   const router = useRouter();
+
+  // ✅ VERY IMPORTANT GUARD
+  if (!session) return null;
+
+  const { data, status } = session;
 
   useEffect(() => {
     if (status === "authenticated") {
@@ -16,16 +21,15 @@ export default function LoginPage() {
     }
   }, [status, router]);
 
-  if (status === "loading") return <p>Loading...</p>;
-  if (status === "authenticated") return <p>Redirecting...</p>;
+  if (status === "loading") {
+    return <p>Loading...</p>;
+  }
 
   return (
     <div>
       <h1>Login</h1>
 
-      <button onClick={() => signIn("google", { callbackUrl: "/dashboard" })}>
-        Sign in with Google
-      </button>
+      {/* login form / google button */}
     </div>
   );
 }
