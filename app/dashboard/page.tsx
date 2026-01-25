@@ -1,21 +1,18 @@
 "use client";
 
-import { useSession } from "next-auth/react";
-
-export const dynamic = "force-dynamic";
+import { signOut } from "next-auth/react";
 
 export default function DashboardPage() {
-  const session = useSession();
+  return (
+    <div>
+      <h1>Dashboard</h1>
 
-  if (!session) return null;
-
-  const { data, status } = session;
-
-  if (status === "loading") return <p>Loading...</p>;
-
-  if (!data?.user) {
-    return <p>Unauthorized</p>;
-  }
-
-  return <div>Welcome {data.user.email}</div>;
+      <button
+        onClick={() => signOut({ callbackUrl: "/auth/login" })}
+        className="text-red-600"
+      >
+        Logout
+      </button>
+    </div>
+  );
 }
